@@ -44,7 +44,7 @@ public class CrawlServiceImpl implements CrawlService {
             ValidatorResult result = validateResponse(response);
 
             if (result == OK){
-                ExtractedData extractedData = extract(response);
+                ExtractedData extractedData = extract(response,url);
                 List<String> distinctUrls = getDistinctUrls(extractedData.getLinks());
                 kafkaProducerService.publish(extractedData);
                 domains.addAll(distinctUrls);

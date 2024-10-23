@@ -1,18 +1,21 @@
 package com.nasr.crawlerservice.domain;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.kafka.common.protocol.types.Field;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ExtractedData {
 
+    private String url;
     private String title;
     private int responseStatus;
-    private String LastModifiedResponseHeader;
+    private String lastModifiedResponseHeader;
     private String content;
     private List<String> links = new ArrayList<>();
 }

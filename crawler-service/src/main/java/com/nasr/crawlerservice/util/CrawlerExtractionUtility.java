@@ -23,11 +23,12 @@ public class CrawlerExtractionUtility {
         return !UNAVAILABLE_WEB_PAGE_STATUS_CODE.contains(response.statusCode());
     }
 
-    public static ExtractedData extract(Response response) throws IOException {
+    public static ExtractedData extract(Response response,String url) throws IOException {
 
         Document doc = response.parse();
         ExtractedData data = new ExtractedData();
 
+        data.setUrl(url);
         data.setContent(doc.body().html());
         data.setTitle(doc.title());
         data.setResponseStatus(response.statusCode());

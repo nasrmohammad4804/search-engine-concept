@@ -1,6 +1,6 @@
 package com.nasr.crawlerservice.service;
 
-public interface KafkaService<T> {
+public interface KafkaProducerService<T> {
 
     void publish(T data);
 }
