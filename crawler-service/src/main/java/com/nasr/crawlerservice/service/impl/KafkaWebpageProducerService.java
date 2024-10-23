@@ -1,14 +1,14 @@
-package com.nasr.crawlerservice.service;
+package com.nasr.crawlerservice.service.impl;
 
 import com.nasr.crawlerservice.constant.ApplicationConstant;
 import com.nasr.crawlerservice.domain.ExtractedData;
+import com.nasr.crawlerservice.service.KafkaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KafkaProducerService {
+public class KafkaWebpageProducerService implements KafkaService<ExtractedData> {
 
     @Autowired
     private KafkaTemplate<String, ExtractedData> kafkaTemplate;

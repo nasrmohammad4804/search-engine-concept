@@ -1,13 +1,13 @@
-package com.nasr.crawlerservice.service;
+package com.nasr.crawlerservice.service.impl;
 
 import com.nasr.crawlerservice.domain.ExtractedData;
 import com.nasr.crawlerservice.enumaration.ValidatorResult;
+import com.nasr.crawlerservice.service.CrawlService;
 import com.nasr.crawlerservice.service.external.UniquenessCheckerExternalService;
 import com.nasr.crawlerservice.validator.CrawlValidator;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class CrawlServiceImpl implements CrawlService {
 
     private final UniquenessCheckerExternalService uniquenessCheckerExternalService;
 
-    private final KafkaProducerService kafkaProducerService;
+    private final KafkaWebpageProducerService kafkaProducerService;
 
     @Override
     public void crawl(String domain) throws IOException {
