@@ -5,9 +5,7 @@ import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static com.nasr.crawlersubscriber.entities.ExtractedDataEntity.*;
 
@@ -25,7 +23,7 @@ public class ExtractedDataEntity {
     private int responseStatus;
     private String LastModifiedResponseHeader;
     private String content;
-    private List<String> links = new ArrayList<>();
+    private Set<String> links = new HashSet<>();
 
     private ExtractedDataEntity(Builder builder) {
         this.id = builder.id;
@@ -45,7 +43,7 @@ public class ExtractedDataEntity {
         private int responseStatus;
         private String lastModifiedResponseHeader;
         private String content;
-        private List<String> links = new ArrayList<>();
+        private Set<String> links = new HashSet<>();
 
 
         private Builder(){
@@ -77,7 +75,7 @@ public class ExtractedDataEntity {
             this.content=content;
             return this;
         }
-        public Builder links(List<String> links){
+        public Builder links(Set<String> links){
             this.links=links;
             return this;
         }
