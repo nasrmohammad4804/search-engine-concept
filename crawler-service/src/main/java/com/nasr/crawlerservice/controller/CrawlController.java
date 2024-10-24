@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-
 @RestController
 public class CrawlController {
 
@@ -17,7 +15,7 @@ public class CrawlController {
     private CrawlService crawlService;
 
     @GetMapping("/crawl")
-    public ResponseEntity<?> crawlDomain(@RequestParam @NotEmpty String domain) throws IOException {
+    public ResponseEntity<?> crawlDomain(@RequestParam @NotEmpty String domain) {
         crawlService.crawl(domain);
         return ResponseEntity.ok().build();
     }

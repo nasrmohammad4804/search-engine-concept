@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -17,5 +19,5 @@ public class ExtractedData {
     private int responseStatus;
     private String lastModifiedResponseHeader;
     private String content;
-    private List<String> links = new ArrayList<>();
+    private Set<String> links = new HashSet<>();
 }

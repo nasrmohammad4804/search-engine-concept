@@ -1,15 +1,15 @@
 package com.nasr.crawlerservice.service.external;
 
 import com.nasr.crawlerservice.config.UniquenessCheckerExternalProperties;
+import com.nasr.crawlerservice.domain.external.UniquenessCheckerItemRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UniquenessCheckerExternalService {
@@ -19,11 +19,11 @@ public class UniquenessCheckerExternalService {
     @Autowired
     private UniquenessCheckerExternalProperties properties;
 
-    public ResponseEntity<List<String>> getDistinctUrl(List<String> urls){
-        return restTemplate.exchange(
-                properties.getBaseurl() + properties.getCheckEndPoint(),
-                HttpMethod.GET, HttpEntity.EMPTY, new ParameterizedTypeReference<List<String>>() {
-                }, urls
-        );
+    public List<String> getDistinctUrl(Set<String> urls) {
+
+        String uri = properties.getBaseurl() + properties.getCheckEndPoint();
+
+        ResponseEntity<?> responseEntity = restTemplate.postForEntity(uri, new UniquenessCheckerItemRequest(urls), List.class);
+        return (List<String>) responseEntity.getBody();
     }
 }
