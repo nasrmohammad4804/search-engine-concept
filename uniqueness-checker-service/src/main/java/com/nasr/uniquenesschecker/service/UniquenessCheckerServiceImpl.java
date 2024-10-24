@@ -6,36 +6,36 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UniquenessCheckerServiceImpl implements UniquenessCheckerService {
 
+    private static final String VISITED_URLS ="visited_urls";
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public List<String> foundUrlNotExists(String[] urls) {
+    public List<String> foundUrlNotExists(Set<String> urls) {
 
-        List<String> result = new ArrayList<>();
+        List<String> uniqueUrls = new ArrayList<>();
 
         for (String url : urls) {
 
-            boolean isExists = checkUrlExists(url);
-            if (!isExists) {
-                saveUrl(url);
-                result.add(url);
-            }
+            Long result = redisTemplate.opsForSet().add(VISITED_URLS, url);
+
+            boolean isUnique = checkIsUnique(result);
+            if (isUnique)
+                uniqueUrls.add(url);
         }
-        return result;
+        return uniqueUrls;
     }
 
-    private boolean checkUrlExists(String url) {
-        return Boolean.TRUE.equals(redisTemplate.hasKey(url));
-    }
 
-    private void saveUrl(String url) {
-        redisTemplate.opsForValue().set(url, String.valueOf(true));
+
+    private boolean checkIsUnique(Long result) {
+        return (result!=null && result>0);
     }
 
 }
