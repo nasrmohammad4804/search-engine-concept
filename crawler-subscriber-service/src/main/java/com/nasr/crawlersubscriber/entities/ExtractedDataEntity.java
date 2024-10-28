@@ -23,7 +23,7 @@ public class ExtractedDataEntity {
     private int responseStatus;
     private String LastModifiedResponseHeader;
     private String content;
-    private Set<String> links = new HashSet<>();
+    private Set<String> links;
 
     private ExtractedDataEntity(Builder builder) {
         this.id = builder.id;

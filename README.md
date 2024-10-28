@@ -2,4 +2,4 @@ this repo created for learning how web search engine such as google work and wri
 
 ----------------------
 ## general overview of implementation of web search engine <br/><br/>
-![](search-engine-achitecture.jpg)
+![](picture.png)

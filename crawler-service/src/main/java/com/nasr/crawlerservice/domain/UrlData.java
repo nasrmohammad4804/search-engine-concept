@@ -15,4 +15,11 @@ public class UrlData {
 
     @NotNull
     private int depth;
+
+    private String parentUrl;
+
+    public UrlData(String url, int depth) {
+        this.url = url;
+        this.depth = depth;
+    }
 }
