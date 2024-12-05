@@ -10,6 +10,7 @@ import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.stereotype.Component;
 
 import static com.nasr.searchservice.constant.WebpageSettingTemplate.SETTING;
+import static com.nasr.searchservice.entities.WebpageEntity.*;
 
 @Component
 public class IndexInitializer {
@@ -21,12 +22,10 @@ public class IndexInitializer {
     @PostConstruct
     public void init() {
 
-        IndexOperations indexOps = elasticsearchOperations.indexOps(IndexCoordinates.of("webpages"));
-
+        IndexOperations indexOps = elasticsearchOperations.indexOps(IndexCoordinates.of(INDEX_NAME));
 
         if (!indexOps.exists())
             createIndex(indexOps);
-
     }
 
     private void createIndex(IndexOperations indexOperations) {
@@ -34,7 +33,6 @@ public class IndexInitializer {
 
         Document settings = Document.parse(SETTING);
         indexOperations.create(settings);
-
         indexOperations.putMapping(WebpageEntity.class);
 
     }
