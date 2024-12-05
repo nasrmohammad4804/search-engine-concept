@@ -12,7 +12,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import static com.nasr.searchservice.entities.WebpageEntity.*;
 
 @Data
-@Document(indexName = INDEX_NAME)
+@Document(indexName = INDEX_NAME,createIndex = false)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,7 +23,7 @@ public class WebpageEntity {
     @Id
     private String id;
 
-    @Field(type = FieldType.Text,analyzer = "edge_ngram_analyzer")
+    @Field(type = FieldType.Text,analyzer = "custom_standard_analyzer")
     private String title;
 
     @Field(type = FieldType.Text)
