@@ -244,7 +244,8 @@ public class WebpageServiceImpl implements WebpageService {
     }
 
     private int getTotalPage(int totalNumber, int size) {
-        int totalPage = totalNumber /= size;
+
+        int totalPage = totalNumber / size;
         return (totalNumber % size == 0) ? totalPage : totalPage + 1;
     }
 
