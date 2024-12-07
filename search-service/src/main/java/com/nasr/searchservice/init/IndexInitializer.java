@@ -23,18 +23,14 @@ public class IndexInitializer {
     public void init() {
 
         IndexOperations indexOps = elasticsearchOperations.indexOps(IndexCoordinates.of(INDEX_NAME));
-
         if (!indexOps.exists())
             createIndex(indexOps);
     }
 
     private void createIndex(IndexOperations indexOperations) {
 
-
         Document settings = Document.parse(SETTING);
         indexOperations.create(settings);
         indexOperations.putMapping(WebpageEntity.class);
-
     }
-
 }
