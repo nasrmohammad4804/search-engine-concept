@@ -1,0 +1,130 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.search-container {
+  width: 95%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Inter;
+  color: #333;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  
+}
+.meta-data{
+  color: rgb(94, 94, 94);
+  margin: 0;
+  font-size: 12px;
+  width: 100%;
+  text-align: end;
+  padding-right: 2px;
+
+}
+
+.results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.result-card {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  background-color: white ;
+}
+.result-card > .title, .summary  {
+  margin: 3px;
+}
+.url{
+  color: green;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.result-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+  padding: 5px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.site-name {
+  margin: 2px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: start;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.title {
+
+  padding-left: 5px;
+  color: #007bff;  
+  cursor: pointer;
+}
+
+.title:hover {
+  text-decoration: underline;
+}
+
+.summary {
+
+  color: grey;
+  font-weight: 500;
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.pagination-btn {
+  padding: 12px 16px;
+  font-size: 1rem;
+  border-radius: 10%;
+  border: 1px solid #ddd;
+
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination-btn.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination-btn:disabled {
+  background-color: #f1f1f1;
+  color: #aaa;
+  cursor: not-allowed;
+}
