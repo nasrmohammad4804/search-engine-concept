@@ -15,7 +15,9 @@ public class ETLData {
 
 
     private String id;
-    private String title;
-    private String body;
     private String url;
+    private String body;
+    private String title;
+    private String iconUrl;
+    private String siteName;
 }

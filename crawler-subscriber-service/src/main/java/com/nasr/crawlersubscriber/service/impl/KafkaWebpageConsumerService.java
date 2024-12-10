@@ -45,6 +45,8 @@ public class KafkaWebpageConsumerService implements KafkaConsumerService {
                 .url(entity.getUrl())
                 .title(entity.getTitle())
                 .body(entity.getContent())
+                .iconUrl(entity.getIconUrl())
+                .siteName(entity.getSiteName())
                 .build();
     }
 }
