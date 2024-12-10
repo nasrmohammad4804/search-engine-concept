@@ -3,6 +3,7 @@ package com.nasr.searchservice.controller;
 import com.nasr.searchservice.service.WebpageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import static org.springframework.data.domain.PageRequest.of;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(value = "http://localhost:3000")
 public class WebpageController {
 
     private final WebpageService webpageService;
