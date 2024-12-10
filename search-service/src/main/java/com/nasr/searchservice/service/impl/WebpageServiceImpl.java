@@ -79,6 +79,8 @@ public class WebpageServiceImpl implements WebpageService {
     @Override
     public SearchResult search(String query, Pageable pageable) throws IOException {
 
+        long queryStartTime = System.currentTimeMillis();
+
         SearchResponse<WebpageEntity> response = elasticsearchClient.search(SearchRequest.of(builder -> builder.index(INDEX_NAME)
                 .trackTotalHits(b -> b.enabled(true))
                 .size(pageable.getPageSize())
@@ -94,7 +96,9 @@ public class WebpageServiceImpl implements WebpageService {
         ), WebpageEntity.class);
 
 
-        return extractSearchFromResponse(response, pageable);
+        SearchResult searchResult = extractSearchFromResponse(response, pageable);
+        searchResult.getMetaData().setResponseTime((int) (System.currentTimeMillis() - queryStartTime));
+        return searchResult;
     }
 
     private Query getTitleSearchQuery(String query) {
@@ -108,7 +112,6 @@ public class WebpageServiceImpl implements WebpageService {
     }
 
     private Query getBodySearchQuery(String query) {
-
         return Query.of(queryBuilder -> queryBuilder.bool(b -> b.should(
                                 List.of(
                                         Query.of(phraseQuery -> phraseQuery.matchPhrase(phraseBuilder ->
@@ -136,9 +139,12 @@ public class WebpageServiceImpl implements WebpageService {
         assert response.hits().total() != null;
         long totalValue = response.hits().total().value();
 
-        searchResult.setPageNumber(pageable.getPageNumber());
-        searchResult.setPageSize(pageable.getPageSize());
-        searchResult.setTotalPage(getTotalPage((int) totalValue, pageable.getPageSize()));
+        searchResult.setMetaData(SearchResult.MetaData.builder()
+                .pageNumber(pageable.getPageNumber())
+                .pageSize(pageable.getPageSize())
+                .totalPage(getTotalPage((int) totalValue, pageable.getPageSize()))
+                .totalRecords(totalValue)
+                .build());
 
         response.hits().hits().forEach(hit -> {
 
@@ -151,6 +157,8 @@ public class WebpageServiceImpl implements WebpageService {
                             .url(source.getUrl())
                             .bodySummarize(summary)
                             .title(source.getTitle())
+                            .iconUrl(source.getIconUrl())
+                            .siteName(source.getSiteName())
                             .build());
         });
 
@@ -165,7 +173,7 @@ public class WebpageServiceImpl implements WebpageService {
         String body = hit.source().getBody();
         String highlight = "";
 
-        if (!bodyHighlight.isEmpty()) {
+        if (bodyHighlight != null && !bodyHighlight.isEmpty()) {
             highlight = bodyHighlight.getFirst();
         }
         Pattern pattern = Pattern.compile(HIGHLIGHT_DATA_PATTERN);
@@ -181,7 +189,6 @@ public class WebpageServiceImpl implements WebpageService {
         }
         int firstHighlightProcessingIndex = highlight.indexOf(HIGHLIGHT_PRE_TAG);
 
-        System.out.println("matchCount is : " + matchCount);
         if (matchCount == 1) {
             return extractMostRelativeSentenceForOneMatching(highlight, firstHighlightProcessingIndex, body, firstGroupLength);
         } else if (matchCount > 1) {
@@ -333,6 +340,14 @@ public class WebpageServiceImpl implements WebpageService {
     }
 
     private WebpageEntity convertDTOToEntity(ETLData data) {
-        return new WebpageEntity(data.getId(), data.getTitle(), data.getUrl(), data.getBody());
+
+        return WebpageEntity.builder()
+                .id(data.getId())
+                .url(data.getUrl())
+                .body(data.getBody())
+                .title(data.getTitle())
+                .iconUrl(data.getIconUrl())
+                .siteName(data.getSiteName())
+                .build();
     }
 }
