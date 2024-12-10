@@ -11,19 +11,28 @@ import java.util.List;
 @Builder
 public class SearchResult {
 
-    private int totalPage;
-    private int pageNumber;
-    private int pageSize;
-
+    private MetaData metaData;
     private List<SearchData> searchData = new ArrayList<>();
 
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public final static class MetaData{
+        private int totalPage;
+        private long totalRecords;
+        private int responseTime;
+        private int pageNumber;
+        private int pageSize;
+    }
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
     public final static class SearchData {
 
-        private String logoUrl;
+        private String iconUrl;
         private String siteName;
         private String title;
         private String url;

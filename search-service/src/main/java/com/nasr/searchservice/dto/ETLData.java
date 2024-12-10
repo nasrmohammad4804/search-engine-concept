@@ -18,6 +18,10 @@ public class ETLData {
     private String body;
     @JsonProperty(value = "url")
     private String url;
+    @JsonProperty(value = "siteName")
+    private String siteName;
+    @JsonProperty(value = "iconUrl")
+    private String iconUrl;
 
 
 }

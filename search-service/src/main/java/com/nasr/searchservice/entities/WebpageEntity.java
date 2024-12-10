@@ -1,5 +1,6 @@
 package com.nasr.searchservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,10 +13,11 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import static com.nasr.searchservice.entities.WebpageEntity.*;
 
 @Data
+@Builder
 @Document(indexName = INDEX_NAME,createIndex = false)
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WebpageEntity {
 
     public static final String INDEX_NAME="webpages";
@@ -32,4 +34,9 @@ public class WebpageEntity {
     @Field(type = FieldType.Text)
     private String body;
 
+    @Field(type = FieldType.Text)
+    private String iconUrl;
+
+    @Field(type = FieldType.Text)
+    private String siteName;
 }
