@@ -8,10 +8,12 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KafkaWebpageProducerService implements KafkaProducerService<ExtractedData> {
+public class KafkaWebpageProducerService extends KafkaProducerService<ExtractedData> {
 
     @Autowired
-    private KafkaTemplate<String, ExtractedData> kafkaTemplate;
+    public KafkaWebpageProducerService(KafkaTemplate<String, ExtractedData> kafkaTemplate) {
+        super(kafkaTemplate);
+    }
 
     public void publish(ExtractedData data) {
         kafkaTemplate.send(ApplicationConstant.WEB_PAGE_TOPIC_NAME,data);

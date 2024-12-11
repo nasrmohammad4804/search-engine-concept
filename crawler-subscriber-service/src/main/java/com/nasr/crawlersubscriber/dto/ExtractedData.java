@@ -17,5 +17,7 @@ public class ExtractedData {
     private int responseStatus;
     private String lastModifiedResponseHeader;
     private String content;
+    private String siteName;
+    private String iconUrl;
     private Set<String> links = new HashSet<>();
 }

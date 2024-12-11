@@ -28,6 +28,8 @@ public class ExtractedDataServiceImpl implements ExtractedDataService {
                 .links(data.getLinks())
                 .responseStatus(data.getResponseStatus())
                 .title(data.getTitle())
+                .iconUrl(data.getIconUrl())
+                .siteName(data.getSiteName())
                 .build();
     }
 }

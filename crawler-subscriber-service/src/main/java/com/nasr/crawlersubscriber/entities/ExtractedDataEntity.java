@@ -23,6 +23,8 @@ public class ExtractedDataEntity {
     private int responseStatus;
     private String LastModifiedResponseHeader;
     private String content;
+    private String siteName;
+    private String iconUrl;
     private Set<String> links;
 
     private ExtractedDataEntity(Builder builder) {
@@ -33,6 +35,8 @@ public class ExtractedDataEntity {
         LastModifiedResponseHeader = builder.lastModifiedResponseHeader;
         this.content = builder.content;
         this.links = builder.links;
+        this.iconUrl=builder.iconUrl;
+        this.siteName=builder.siteName;
     }
 
     public static class Builder{
@@ -43,6 +47,8 @@ public class ExtractedDataEntity {
         private int responseStatus;
         private String lastModifiedResponseHeader;
         private String content;
+        private String siteName;
+        private String iconUrl;
         private Set<String> links = new HashSet<>();
 
 
@@ -61,6 +67,14 @@ public class ExtractedDataEntity {
         }
         public Builder title(String title){
             this.title= title;
+            return this;
+        }
+        public Builder siteName(String siteName){
+            this.siteName= siteName;
+            return this;
+        }
+        public Builder iconUrl(String iconUrl){
+            this.iconUrl= iconUrl;
             return this;
         }
         public Builder responseStatus(int responseStatus){

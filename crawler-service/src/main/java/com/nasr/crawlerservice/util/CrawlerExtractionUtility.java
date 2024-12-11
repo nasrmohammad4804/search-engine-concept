@@ -44,11 +44,46 @@ public class CrawlerExtractionUtility {
         data.setUrl(url);
         data.setContent(body.text());
         data.setTitle(doc.title());
+        data.setSiteName(extractSiteName(doc));
+        data.setIconUrl(extractIconUrl(doc));
         data.setResponseStatus(response.statusCode());
         data.setLastModifiedResponseHeader(response.header(LAST_MODIFIED_TIME));
         data.setLinks(extractLinks(doc,url));
 
         return data;
+    }
+
+    private static String extractIconUrl(Document doc) {
+        Element iconLink = doc.selectFirst("link[rel=icon]");
+        if (iconLink != null) {
+            return iconLink.attr("abs:href");
+        }
+
+        Element shortcutIconLink = doc.selectFirst("link[rel=shortcut icon]");
+        if (shortcutIconLink != null) {
+            return shortcutIconLink.attr("abs:href");
+        }
+        return null;
+
+    }
+
+    private static String extractSiteName(Document document){
+
+        Element siteNameElement = document.selectFirst("meta[property=og:site_name]");
+        if (siteNameElement != null) {
+            return siteNameElement.attr("content");
+        }
+
+        Element applicationNameElement = document.selectFirst("meta[name=application-name]");
+        if (applicationNameElement != null) {
+            return applicationNameElement.attr("content");
+        }
+
+        Element twitterSiteElement = document.selectFirst("meta[name=twitter:site]");
+        if (twitterSiteElement != null) {
+            return twitterSiteElement.attr("content");
+        }
+        return null;
     }
 
     private static Set<String> extractLinks(Document document,String baseUrl) {

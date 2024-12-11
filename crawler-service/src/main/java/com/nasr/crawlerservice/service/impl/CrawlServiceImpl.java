@@ -64,8 +64,6 @@ public class CrawlServiceImpl implements CrawlService {
         CompletableFuture.runAsync(this::startCrawlProcess)
                 .thenRun(this::clearData);
 
-        System.out.println("test");
-
     }
 
     private void startCrawlProcess() {
@@ -79,8 +77,8 @@ public class CrawlServiceImpl implements CrawlService {
 
                 if (!domains.isEmpty()) {
 
-                    UrlData urlData = domains.poll();  // Use poll to avoid blocking
-                    if (urlData == null) break; // Exit if no more URLs to process
+                    UrlData urlData = domains.poll();
+                    if (urlData == null) break;
 
                     try {
                         semaphore.acquire();

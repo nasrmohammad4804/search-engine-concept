@@ -1,6 +1,13 @@
 package com.nasr.crawlerservice.service;
 
-public interface KafkaProducerService<T> {
+import org.springframework.kafka.core.KafkaTemplate;
 
-    void publish(T data);
+public abstract class KafkaProducerService<T> {
+
+    protected final KafkaTemplate<String, T> kafkaTemplate;
+
+    public KafkaProducerService(KafkaTemplate<String, T> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
+    public  abstract void publish(T data);
 }
