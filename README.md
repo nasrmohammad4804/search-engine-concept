@@ -12,77 +12,15 @@ we implemented web search engine with elastic. <br>
 .
 ### get started with project
 
-1) at first need to run <b>mongodb service</b> locally on port 27017 .
+it's very easy to run that
 
-you can run it with docker with following command.
+1) install Docker from official page
+2) use following command
 
-    docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
+         cd .\deployment\
+         docker-compose up
 
-2) next you need to run redis server locally. you can do it in different approach . by wsl or docker
-
-install by wsl
-
-after open wsl terminal use 
-        
-        sudo apt update
-
-to ensure package list updated. after that install redis with following command
-
-    sudo apt install redis-server
- 
-after that start redis-server with command
-
-    sudo service redis-server start
-
-
-3) setup elastic search cluster locally on port 9200
-
-        1) goes through elastic search official page and download related zip file
-        2).and after extract them and run elasticsearch.bat in bin directory
-        3)also you need to set password (123456) for sudo (elastic) user . to work correctly in search-service
-
-
-
-4) setup kafka cluster for work as internal collaboration between services.(transfer webpage & etl)
-
-step1) Download kafka
-
-    go to Apache Kafka download page . and download binary file of that
-
-step2) extract kafka
-    
-    extract binary file using zip or winrar. move to extracted directory
-
-step3) start zookeeper
-    
-    \bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
-
-step4) start kafka server
-
-    .\bin\windows\kafka-server-start.bat .\config\server.properties
-
-
-5) start crawler-service that run at port 8080
-6) start uniqueness-checker-service that run at port 8081
-7) start crawler-subscriber-service that run at port 8082
-8) start search-service that run at port 8083
-
-9) for using ui app need to execute following command
-
-install nodejs
-
-    Go to the official Node.js website and download lts version of that . should .msi file(for windows)
-    after install successfuly it include npm (node package manager)
-
-install node-module <br>
-go to ui-search-app directory and use following command to install modules
-
-    npm install
-
-after node-module directory created you can run that with following command
-
-    npm start
-
+2) its amazing all services and dependency installed and configured properly
 
 
 
