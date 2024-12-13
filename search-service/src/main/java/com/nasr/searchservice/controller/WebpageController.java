@@ -15,7 +15,7 @@ import static org.springframework.data.domain.PageRequest.of;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(value = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class WebpageController {
 
     private final WebpageService webpageService;

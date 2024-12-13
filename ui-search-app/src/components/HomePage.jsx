@@ -9,20 +9,21 @@ import {  useNavigate } from "react-router-dom";
 
 const HomePage = () => {
 
+
   const [inputValue, setInputValue] = useState("");
 const [suggestions, setSuggestions] = useState([]); 
 const navigate = useNavigate();
   const debounceTimeoutRef = React.useRef(null);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     document.body.style.backgroundColor='#ffffff';
-
     return () => {   document.body.style.backgroundColor='';}
   },[])
   const fetchSuggestions = async (query) => {
     try {
 
-      const response = await fetch(`http://localhost:8083/suggest?query=${query}`);
+      const response = await fetch(`${apiUrl}/suggest?query=${query}`);
       const data = await response.json();
       console.log(`data is : ${data}`);
       setSuggestions(data); 

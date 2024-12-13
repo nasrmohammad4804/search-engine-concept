@@ -12,6 +12,8 @@ const SearchPage = () => {
 
   const location = useLocation();
   const query = new URLSearchParams(location.search).get("query");
+  const apiUrl = process.env.REACT_APP_API_URL;
+
 
   const handlePageChange = (page) => {
     if (page > 0 && page <= metaData.totalPage) {
@@ -23,7 +25,7 @@ const SearchPage = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      let url =`http://localhost:8083/search?query=${query}&page=${currentPage}`;
+      let url =`${apiUrl}/search?query=${query}&page=${currentPage}`;
       console.log('url is : '+url);
        
       const response = await fetch(

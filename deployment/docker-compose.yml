@@ -1,0 +1,149 @@
+
+services:
+
+  elastic-service:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    container_name: elasticsearch-container
+    environment:
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=123456
+      - network.host=0.0.0.0
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elk_data:/usr/share/elasticsearch/data
+
+  zookeeper-service:
+    image: confluentinc/cp-zookeeper:7.4.4
+    container_name: zookeeper-container
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+  kafka-broker-1-service:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: kafka-broker1-container
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-service:2181
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:9091,EXTERNAL://0.0.0.0:29095
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker1-container:9091,EXTERNAL://localhost:9091
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+    ports:
+      - "9091:29095"
+    volumes:
+      - kafka-broker1-data:/var/lib/kafka/data
+    depends_on:
+      - zookeeper-service
+
+  kafka-broker-2-service:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: kafka-broker2-container
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-service:2181
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:9092,EXTERNAL://0.0.0.0:29096
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker2-container:9092,EXTERNAL://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:29096"
+    volumes:
+      - kafka-broker2-data:/var/lib/kafka/data
+    depends_on:
+      - zookeeper-service
+
+  # we don't expose it to host
+  redis-service:
+    image: redis:latest
+    container_name: redis-container
+
+    restart: always
+    volumes:
+      - redis-data:/data
+
+# we don't expose it to host
+  mongo-service:
+    image: mongo
+    container_name: mongo-container
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+
+  uniqueness-checker-service:
+    build:
+      context: ./../uniqueness-checker-service
+    container_name: uniqueness-checker-service-container
+    environment:
+      REDIS_HOST: redis-container
+      REDIS_PORT: 6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis-service
+
+
+  crawl-service:
+    build:
+      context: ./../crawler-service
+    container_name: crawler-service-container
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVER: kafka-broker1-container:9091,kafka-broker2-container:9092
+      UNIQUENESS_CHECKER_SERVER_BASEURL: http://uniqueness-checker-service:8081/uniqueness
+
+    ports:
+      - "8080:8080"
+    depends_on:
+      - uniqueness-checker-service
+      - kafka-broker-1-service
+      - kafka-broker-2-service
+
+  crawler-subscriber-service:
+    build:
+      context: ./../crawler-subscriber-service
+    container_name: crawler-subscriber-service-container
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVER: kafka-broker1-container:9091,kafka-broker2-container:9092
+      SPRING_MONGODB_HOST: mongo-container
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mongo-service
+      - kafka-broker-1-service
+      - kafka-broker-2-service
+
+  search-service:
+    build:
+      context: ./../search-service
+    container_name: search-service-container
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVER: kafka-broker1-container:9091,kafka-broker2-container:9092
+      ELASTICSEARCH_URI: http://elasticsearch-container:9200
+    ports:
+      - "8083:8083"
+    depends_on:
+      - elastic-service
+      - kafka-broker-1-service
+      - kafka-broker-2-service
+
+  ui-search-service:
+    build:
+      context: ./../ui-search-app
+    container_name: ui-search-app-container
+    depends_on:
+      - search-service
+
+volumes:
+  elk_data:
+  kafka-broker1-data:
+  kafka-broker2-data:
+  redis-data:
+  mongo-data:
