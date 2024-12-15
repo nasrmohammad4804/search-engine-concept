@@ -7,7 +7,20 @@ services:
     environment:
       - discovery.type=single-node
       - ELASTIC_PASSWORD=123456
-      - network.host=0.0.0.0
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+      - xpack.security.http.ssl.enabled= false
+      - xpack.security.enabled= false
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 10s
+      timeout: 5s
+      retries: 4
+
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -149,9 +162,13 @@ services:
     ports:
       - "8083:8083"
     depends_on:
-      - elastic-service
-      - kafka-broker-1-service
-      - kafka-broker-2-service
+      elastic-service:
+        condition: service_healthy
+      kafka-broker-1-service:
+        condition: service_started
+      kafka-broker-2-service:
+        condition: service_started
+
     networks:
       - state-full-network
       - state-less-network
@@ -167,4 +184,4 @@ networks:
   state-full-network:
     driver: bridge
   state-less-network:
-    driver: bridge
+    external: true

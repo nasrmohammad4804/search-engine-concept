@@ -14,4 +14,4 @@ services:
 
 networks:
   state-less-network:
-    driver: bridge
+    external: true
