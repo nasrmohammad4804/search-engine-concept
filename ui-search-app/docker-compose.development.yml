@@ -9,8 +9,6 @@ services:
       - NODE_ENV=development
     ports:
       - "3000:80"
-    depends_on:
-      - search-service
     networks:
       - state-less-network
 

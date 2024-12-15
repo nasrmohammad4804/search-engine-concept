@@ -19,6 +19,8 @@ it's very easy to run that
 
          cd .\deployment\
          docker-compose up
+         cd .\..\ui-search-app
+         docker-compose -f docker-compose.development.yml
 
 2) its amazing all services and dependency installed and configured properly
 

@@ -9,8 +9,6 @@ services:
       - NODE_ENV=production
     ports:
       - "80:80"
-    depends_on:
-      - search-service
     networks:
       - state-less-network
 
