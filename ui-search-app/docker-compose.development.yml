@@ -1,0 +1,17 @@
+
+services:
+  ui-search-app:
+    build:
+      context: .
+      dockerfile: Dockerfile-development
+    container_name: ui-search-app-container
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:80"
+    depends_on:
+      - search-service
+
+networks:
+  state-less-network:
+    driver: bridge

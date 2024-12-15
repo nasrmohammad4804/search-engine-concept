@@ -13,6 +13,8 @@ services:
       - "9300:9300"
     volumes:
       - elk_data:/usr/share/elasticsearch/data
+    networks:
+      - state-full-network
 
   zookeeper-service:
     image: confluentinc/cp-zookeeper:7.4.4
@@ -22,6 +24,9 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
+    networks:
+      - state-full-network
+
   kafka-broker-1-service:
     image: confluentinc/cp-kafka:7.4.0
     container_name: kafka-broker1-container
@@ -41,6 +46,8 @@ services:
       - kafka-broker1-data:/var/lib/kafka/data
     depends_on:
       - zookeeper-service
+    networks:
+      - state-full-network
 
   kafka-broker-2-service:
     image: confluentinc/cp-kafka:7.4.0
@@ -60,6 +67,8 @@ services:
       - kafka-broker2-data:/var/lib/kafka/data
     depends_on:
       - zookeeper-service
+    networks:
+      - state-full-network
 
   # we don't expose it to host
   redis-service:
@@ -69,6 +78,8 @@ services:
     restart: always
     volumes:
       - redis-data:/data
+    networks:
+      - state-full-network
 
 # we don't expose it to host
   mongo-service:
@@ -77,6 +88,8 @@ services:
     restart: always
     volumes:
       - mongo-data:/data/db
+    networks:
+      - state-full-network
 
   uniqueness-checker-service:
     build:
@@ -89,6 +102,8 @@ services:
       - "8081:8081"
     depends_on:
       - redis-service
+    networks:
+      - state-full-network
 
 
   crawl-service:
@@ -105,6 +120,8 @@ services:
       - uniqueness-checker-service
       - kafka-broker-1-service
       - kafka-broker-2-service
+    networks:
+      - state-full-network
 
   crawler-subscriber-service:
     build:
@@ -119,6 +136,8 @@ services:
       - mongo-service
       - kafka-broker-1-service
       - kafka-broker-2-service
+    networks:
+      - state-full-network
 
   search-service:
     build:
@@ -133,13 +152,9 @@ services:
       - elastic-service
       - kafka-broker-1-service
       - kafka-broker-2-service
-
-  ui-search-service:
-    build:
-      context: ./../ui-search-app
-    container_name: ui-search-app-container
-    depends_on:
-      - search-service
+    networks:
+      - state-full-network
+      - state-less-network
 
 volumes:
   elk_data:
@@ -147,3 +162,9 @@ volumes:
   kafka-broker2-data:
   redis-data:
   mongo-data:
+
+networks:
+  state-full-network:
+    driver: bridge
+  state-less-network:
+    driver: bridge

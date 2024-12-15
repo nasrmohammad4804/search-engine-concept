@@ -25,7 +25,6 @@ const navigate = useNavigate();
 
       const response = await fetch(`${apiUrl}/suggest?query=${query}`);
       const data = await response.json();
-      console.log(`data is : ${data}`);
       setSuggestions(data); 
     } catch (error) {
       console.error("Error fetching suggestions:", error);
