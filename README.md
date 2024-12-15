@@ -15,17 +15,12 @@ we implemented web search engine with elastic. <br>
 it's very easy to run that
 
 1) install Docker from official page
-2) use following command
-
-         cd .\deployment\
-         docker-compose up
-         cd .\..\ui-search-app
-         docker-compose -f docker-compose.development.yml
+2) use following command for start in development mode . open <b>powershell</b> or <b>git-bash</b> 
+            
+           chmod +x start-development-services.sh
+           bash start-development-services.sh
 
 2) its amazing all services and dependency installed and configured properly
-
-
-
 --------------------------------------------------
 
 after run all service & dependency for project to work correctly
