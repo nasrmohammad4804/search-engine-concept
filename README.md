@@ -14,8 +14,8 @@ we implemented web search engine with elastic. <br>
 
 it's very easy to run that
 
-1) install Docker from official page
-2) use following command for start in development mode . open <b>powershell</b> or <b>git-bash</b> 
+1) <b>install Docker from official page</b>
+2) use following command for start in <b>development mode</b> . open <b>powershell</b> or <b>git-bash</b> 
             
            chmod +x start-development-services.sh
            bash start-development-services.sh
