@@ -1,14 +1,23 @@
-this repo created for learning how web search engine such as google work and write some project with crawler and other concept of search engine
+### <i>are you think how a web search engine such as google work? it seem very complex work? dont worry we are create piston engine It behaves like it</i>
 
-----------------------
+### Piston Engine Demo
 
-🤩🤩🤩  .Wow we are implement lightweight web search engine same as <b style="color:blue">G</b><b style="color:red">o</b><b style="color:orange">o</b><b style="color:blue">g</b><b style="color:green">l</b><b style="color:red">e</b> 
+https://github.com/user-attachments/assets/09f97a12-bef5-487f-a47a-1d4923e5d1df
 
-## general overview of implementation of web search engine with elastic search<br/><br/>
+<br/> 
+
+### 🤩🤩🤩  .Wow we are implement lightweight web search engine same as <b style="color:blue">G</b><b style="color:red">o</b><b style="color:orange">o</b><b style="color:blue">g</b><b style="color:green">l</b><b style="color:red">e</b>  <br/> <br/>
+-------------------------------------------------------------------------------------
+
+
+## general architecture and overview of piston engine at a glance<br/><br/>
 ![](picture.png)
 
-we implemented web search engine with elastic. <br>
-😎😎 in next version we want to implement key functionality of elastic instead of using it. 
+
+
+we implemented web search engine with elastic . 😎😎 in next version we want to implement key functionality of elastic instead of using it. <br/> <br/>
+
+--------------------------------------------------------------------------------------
 .
 ### get started with project
 
@@ -57,9 +66,5 @@ and after select input we search base on query to find most related document and
 <br>
 over time our dataset is larger and our suggestion it can be more precise and search result is more
 
-
-
-
-[piston engine demo](https://drive.google.com/file/d/1b_RzkC42xdEXYnryF-j3gGldSMsQHSO5/view?usp=sharing)
 
 
