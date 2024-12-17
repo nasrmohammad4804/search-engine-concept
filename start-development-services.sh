@@ -10,7 +10,7 @@ ES_URL="http://localhost:9200"
 KIBANA_SYSTEM_PASSWORD=KIBANA_USER@12345678
 
 install_yq(){
-  echo "install yq for editing kibana.yml"
+  echo "install yq for editing yml file"
   winget install yq
 }
 move_to_deployment_directory(){
