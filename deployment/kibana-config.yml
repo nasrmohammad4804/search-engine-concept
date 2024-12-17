@@ -61,12 +61,10 @@ server.name: "kibana-server"
 # the username and password that the Kibana server uses to perform maintenance on the Kibana
 
 # index at startup. Your Kibana users still need to authenticate with Elasticsearch, which
-
 elasticsearch:
   username: "kibana_system"
-  password: "KIBANA_USER@12345678"
+  password: "KIBANA_INTERNAL_COMMUNUCATION_PASSWORD@12345678"
   hosts: ["http://elasticsearch-container:9200"]
-
 # Kibana can also authenticate to Elasticsearch via "service account tokens".
 
 # Service account tokens are Bearer style tokens that replace the traditional username/password based configuration.
@@ -139,7 +137,6 @@ elasticsearch.ssl.verificationMode: none
 #  fileName: /var/logs/kibana.log
 #  layout:
 #    type: json
-
 # Example with size based log rotation
 
 #logging.appenders.default:

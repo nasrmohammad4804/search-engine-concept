@@ -52,7 +52,7 @@ i generate ui for autocomplete in search-box and select that. like picture bello
 
 and after select input we search base on query to find most related document and rank them. like picture bellow
 
-![](search-page.png)
+![search-page](search-page.png)
 
 <br>
 over time our dataset is larger and our suggestion it can be more precise and search result is more
