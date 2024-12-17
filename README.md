@@ -2,7 +2,7 @@ this repo created for learning how web search engine such as google work and wri
 
 ----------------------
 
-🤩🤩🤩  .Wow we are implement lightweight web search engine same as Google 
+🤩🤩🤩  .Wow we are implement lightweight web search engine same as <b style="color:blue">G</b><b style="color:red">o</b><b style="color:orange">o</b><b style="color:blue">g</b><b style="color:green">l</b><b style="color:red">e</b> 
 
 ## general overview of implementation of web search engine with elastic search<br/><br/>
 ![](picture.png)
@@ -32,10 +32,16 @@ we do it manually from swagger . but we can generate ui for that and only admin 
 <span style="font-weight:500;font-family:Verdana">it accessible at http://localhost:8080/swagger-ui/index.html</span>
 ![crawl-page.png](crawl-page.png)
 
+2) you access to all document generated from start point of <b>crawler-service</b> in <b>kibana dashboard</b>
+   <span style="font-weight:500;font-family:Verdana"> at address(http://localhost:5601) by <i>username -> <b>elastic</b> & password -> <b>123456</b> </i> </span>. <br/>
 
-2) using search-service endpoint at <span style="font-weight:500;font-family:Verdana">(http://localhost:8083/swagger-ui/index.html) </span>  to retrieve clear result 
+it has amazing visualization dashboard like bellow
 
-we fortunately create ui for show suggestion and search from index .<br/> <span style="font-weight:500;font-family:Verdana">it accessible at http://localhost:3000</span>
+![](kibana-dashboard-page.png)
+
+3) also using search-service endpoint at <span style="font-weight:500;font-family:Verdana">(http://localhost:8083/swagger-ui/index.html) </span>  to retrieve clear result for <b>suggestion & search</b> that read from elastic index <br/>
+
+we fortunately create ui for show suggestion and search from <span style="font-weight:600">search-service</span> same as <b style="color:blue">G</b><b style="color:red">o</b><b style="color:orange">o</b><b style="color:blue">g</b><b style="color:green">l</b><b style="color:red">e</b> .<br/> <span style="font-weight:500;font-family:Verdana">it accessible at http://localhost:3000</span>
 
 i generate ui for autocomplete in search-box and select that. like picture bellow <br/>
 

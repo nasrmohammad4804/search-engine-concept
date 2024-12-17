@@ -7,7 +7,7 @@ ES_PASSWORD="123456"
 ES_URL="http://localhost:9200"
 
 # kibana config
-KIBANA_SYSTEM_PASSWORD=KIBANA_USER@12345678
+KIBANA_SYSTEM_PASSWORD="KIBANA_INTERNAL_COMMUNUCATION_PASSWORD@12345678"
 
 install_yq(){
   echo "install yq for editing yml file"
