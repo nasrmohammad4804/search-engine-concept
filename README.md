@@ -17,8 +17,8 @@ it's very easy to run that
 1) <b>install Docker from official page</b>
 2) use following command for start in <b>development mode</b> . open <b>powershell</b> or <b>git-bash</b> 
             
-           chmod +x start-development-services.sh
-           bash start-development-services.sh
+       chmod +x start-development-services.sh
+       bash start-development-services.sh
 
 2) its amazing all services and dependency installed and configured properly
 --------------------------------------------------
@@ -28,15 +28,17 @@ we need two thing
 
 1) add domain with crawler-service to crawler that domain and related page .and automatically index that in search-service from crawled webpage
 
-we do it manually from swagger . but we can generate ui for that and only admin user can do that
+we do it manually from swagger . but we can generate ui for that and only admin user can do that  <br/>
+<span style="font-weight:500;font-family:Verdana">it accessible at http://localhost:8080/swagger-ui/index.html</span>
 ![crawl-page.png](crawl-page.png)
 
 
-2) using search-service endpoint to retrieve clear result
+2) using search-service endpoint at <span style="font-weight:500;font-family:Verdana">(http://localhost:8083/swagger-ui/index.html) </span>  to retrieve clear result 
 
-we fortunately create ui for show suggestion and search from index
+we fortunately create ui for show suggestion and search from index .<br/> <span style="font-weight:500;font-family:Verdana">it accessible at http://localhost:3000</span>
 
-i generate ui for autocomplete in search-box and select that. like picture bellow
+i generate ui for autocomplete in search-box and select that. like picture bellow <br/>
+
 
 ![suggestion](suggestion-page.png)
 
