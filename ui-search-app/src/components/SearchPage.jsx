@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import defaultIcon from './../assets/default-icon.png';
-import './../styles/searchPage.css';
+import defaultIcon from "./../assets/default-icon.png";
+import "./../styles/searchPage.css";
 
 const SearchPage = () => {
-
   const [items, setItems] = useState([]);
-  const[metaData,setMetaData] = useState({});
+  const [metaData, setMetaData] = useState({});
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -25,19 +24,16 @@ const SearchPage = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      let url =`${apiUrl}/search?query=${query}&page=${currentPage}`;
-      console.log('url is : '+url);
-       
-      const response = await fetch(
-        url
-      );
+      const url = `${apiUrl}/search?query=${query}&page=${currentPage}`;
+      console.log("url is: " + url);
+
+      const response = await fetch(url);
       const result = await response.json();
 
       console.log(result);
-      
+
       setItems(result.searchData || []);
-      setMetaData(result.metaData);
-      
+      setMetaData(result.metaData || {});
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -45,46 +41,52 @@ const SearchPage = () => {
     }
   };
 
-
   useEffect(() => {
-
-    document.body.style.backgroundColor = 'rgb(0,0,0,.07)';
+    document.body.style.backgroundColor = "rgb(0,0,0,.07)";
     if (query) {
       fetchData();
     }
 
-    return () => { document.body.style.backgroundColor = '' }
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
   }, [query, currentPage]);
-
 
   return (
     <div className="search-container">
       <h1>Search Results for "{query}"</h1>
-      <p className="meta-data">About {metaData.totalRecords} results ({metaData.responseTime/1000} second) </p>
+      <p className="meta-data">
+        About {metaData.totalRecords} results ({metaData.responseTime / 1000}{" "}
+        second)
+      </p>
+
       {loading ? (
         <p>Loading...</p>
       ) : items.length > 0 ? (
         <>
+          {/* Results */}
           <div className="results-container">
             {items.map((item, index) => (
-              <div
-                className="result-card"
-                key={index}
-              >
-
-                <div style={{ display: "flex", gap: "1px"}}>
-                  {item.iconUrl ? <img className="icon" src={item.iconUrl}  alt={item.siteName} /> :
-                    <img className="icon" src={defaultIcon}  alt="default-icon" />
-                  }
+              <div className="result-card" key={index}>
+                <div style={{ display: "flex", gap: "1px" }}>
+                  {item.iconUrl ? (
+                    <img className="icon" src={item.iconUrl} alt={item.siteName} />
+                  ) : (
+                    <img className="icon" src={defaultIcon} alt="default-icon" />
+                  )}
 
                   <div className="site-name">
-                    <div style={{fontSize:'14px'}}>{item.siteName}</div>
-                    <div style={{fontSize:'12px',color:'green'}}>{item.url}</div>
+                    <div style={{ fontSize: "14px" }}>{item.siteName}</div>
+                    <div style={{ fontSize: "12px", color: "green" }}>{item.url}</div>
                   </div>
                 </div>
-                <h2 className="title" onClick={() => window.open(item.url, "_blank")}>{item.title}</h2>
+                <h2
+                  className="title"
+                  onClick={() => window.open(item.url, "_blank")}
+                >
+                  {item.title}
+                </h2>
                 <p className="summary">{item.bodySummarize}</p>
-
               </div>
             ))}
           </div>
@@ -97,16 +99,33 @@ const SearchPage = () => {
             >
               Previous
             </button>
-            {Array.from({ length: metaData.totalPage }, (_, i) => (
-              <button
-                key={i}
-                className={`pagination-btn ${currentPage === i + 1 ? "active" : ""
-                  }`}
-                onClick={() => handlePageChange(i + 1)}
-              >
-                {i + 1}
-              </button>
-            ))}
+
+            {(() => {
+              const totalPages = metaData.totalPage || 1;
+              const maxVisiblePages = 10;
+
+              const startPage = Math.max(
+                1,
+                Math.min(currentPage - Math.floor(maxVisiblePages / 2), totalPages - maxVisiblePages + 1)
+              );
+              const endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
+
+              const pageNumbers = [];
+              for (let i = startPage; i <= endPage; i++) {
+                pageNumbers.push(i);
+              }
+
+              return pageNumbers.map((page) => (
+                <button
+                  key={page}
+                  className={`pagination-btn ${currentPage === page ? "active" : ""}`}
+                  onClick={() => handlePageChange(page)}
+                >
+                  {page}
+                </button>
+              ));
+            })()}
+
             <button
               className="pagination-btn"
               onClick={() => handlePageChange(currentPage + 1)}
