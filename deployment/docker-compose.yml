@@ -10,13 +10,6 @@ services:
       - bootstrap.memory_lock=true
       - ES_JAVA_OPTS=-Xms2g -Xmx2g
       - xpack.security.http.ssl.enabled= false
-      - xpack.security.enabled= false
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9200"]
-      interval: 10s
-      timeout: 5s
-      retries: 4
-
     ulimits:
       memlock:
         soft: -1
@@ -26,6 +19,21 @@ services:
       - "9300:9300"
     volumes:
       - elk_data:/usr/share/elasticsearch/data
+    networks:
+      - state-full-network
+
+  kibana-service:
+    image: docker.elastic.co/kibana/kibana:8.17.0
+    container_name: kibana-service-container
+    environment:
+      - xpack.synthetics.enabled=false
+      - xpack.security.enabled= false
+    ports:
+      - "5601:5601"
+    volumes:
+      - ./kibana-config.yml:/usr/share/kibana/config/kibana-config.yml
+    depends_on:
+      - elastic-service
     networks:
       - state-full-network
 
@@ -162,12 +170,9 @@ services:
     ports:
       - "8083:8083"
     depends_on:
-      elastic-service:
-        condition: service_healthy
-      kafka-broker-1-service:
-        condition: service_started
-      kafka-broker-2-service:
-        condition: service_started
+      - elastic-service
+      - kafka-broker-1-service
+      - kafka-broker-2-service
 
     networks:
       - state-full-network
