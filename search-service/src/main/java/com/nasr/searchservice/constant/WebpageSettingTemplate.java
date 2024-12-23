@@ -8,7 +8,7 @@ public class WebpageSettingTemplate {
                       "analyzer": {
                         "custom_standard_analyzer": {
                           "tokenizer": "standard",
-                          "filter": ["lowercase"]
+                          "filter": ["lowercase","stop"]
                         }
                       }
                     }

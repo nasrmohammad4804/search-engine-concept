@@ -28,6 +28,7 @@ public class WebpageEntity {
     public static final String INDEX_NAME = "webpages";
 
     @Id
+    @Field(type = FieldType.Keyword)
     private String id;
 
     @Field(type = FieldType.Text, analyzer = "custom_standard_analyzer")
@@ -36,7 +37,7 @@ public class WebpageEntity {
     @Field(type = FieldType.Text)
     private String url;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, analyzer = "custom_standard_analyzer")
     private String body;
 
     @Field(type = FieldType.Text)
