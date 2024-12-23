@@ -19,10 +19,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.Instant;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -348,6 +346,7 @@ public class WebpageServiceImpl implements WebpageService {
                 .title(data.getTitle())
                 .iconUrl(data.getIconUrl())
                 .siteName(data.getSiteName())
+                .createdDate(Date.from(Instant.now()))
                 .build();
     }
 }
