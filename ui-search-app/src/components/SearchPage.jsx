@@ -13,7 +13,6 @@ const SearchPage = () => {
   const query = new URLSearchParams(location.search).get("query");
   const apiUrl = process.env.REACT_APP_API_URL;
 
-
   const handlePageChange = (page) => {
     if (page > 0 && page <= metaData.totalPage) {
       setCurrentPage(page);
@@ -21,17 +20,16 @@ const SearchPage = () => {
     }
   };
 
+  const truncateText = (text, limit) => {
+    return text && text.length > limit ? text.slice(0, limit) + "..." : text;
+  };
+
   const fetchData = async () => {
     setLoading(true);
     try {
       const url = `${apiUrl}/search?query=${query}&page=${currentPage}`;
-      console.log("url is: " + url);
-
       const response = await fetch(url);
       const result = await response.json();
-
-      console.log(result);
-
       setItems(result.searchData || []);
       setMetaData(result.metaData || {});
     } catch (error) {
@@ -46,7 +44,6 @@ const SearchPage = () => {
     if (query) {
       fetchData();
     }
-
     return () => {
       document.body.style.backgroundColor = "";
     };
@@ -56,15 +53,13 @@ const SearchPage = () => {
     <div className="search-container">
       <h1>Search Results for "{query}"</h1>
       <p className="meta-data">
-        About {metaData.totalRecords} results ({metaData.responseTime / 1000}{" "}
-        second)
+        About {metaData.totalRecords} results ({metaData.responseTime / 1000} second)
       </p>
 
       {loading ? (
         <p>Loading...</p>
       ) : items.length > 0 ? (
         <>
-          {/* Results */}
           <div className="results-container">
             {items.map((item, index) => (
               <div className="result-card" key={index}>
@@ -86,7 +81,7 @@ const SearchPage = () => {
                 >
                   {item.title}
                 </h2>
-                <p className="summary">{item.bodySummarize}</p>
+                <p className="summary">{truncateText(item.bodySummarize, 150)}</p>
               </div>
             ))}
           </div>
