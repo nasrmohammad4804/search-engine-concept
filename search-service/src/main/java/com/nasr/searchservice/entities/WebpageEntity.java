@@ -14,6 +14,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+import java.util.Vector;
 
 import static com.nasr.searchservice.entities.WebpageEntity.INDEX_NAME;
 
@@ -39,6 +41,9 @@ public class WebpageEntity {
 
     @Field(type = FieldType.Text, analyzer = "custom_standard_analyzer")
     private String body;
+
+    @Field(type = FieldType.Dense_Vector,dims =384,similarity ="cosine")
+    private List<Float> dimensions = new Vector<>();
 
     @Field(type = FieldType.Text)
     private String iconUrl;

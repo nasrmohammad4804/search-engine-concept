@@ -12,6 +12,7 @@ import com.nasr.searchservice.dto.SearchResult;
 import com.nasr.searchservice.dto.SuggestData;
 import com.nasr.searchservice.entities.WebpageEntity;
 import com.nasr.searchservice.enumeration.HighlightFieldType;
+import com.nasr.searchservice.external.EmbeddingExternalService;
 import com.nasr.searchservice.repository.WebpageRepository;
 import com.nasr.searchservice.service.WebpageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,24 @@ public class WebpageServiceImpl implements WebpageService {
     @Autowired
     private ElasticsearchClient elasticsearchClient;
 
+    @Autowired
+    private EmbeddingExternalService embeddingExternalService;
+
 
     @Override
     public WebpageEntity save(ETLData etlWebpageData) {
 
         WebpageEntity entity = convertDTOToEntity(etlWebpageData);
         return repository.save(entity);
+    }
+
+    @Override
+    public Iterable<WebpageEntity> saveAll(List<ETLData> etlWebpageData) {
+
+        List<WebpageEntity> webpages = etlWebpageData.stream().map(this::convertDTOToEntity)
+                .toList();
+
+        return repository.saveAll(webpages);
     }
 
     @Override
@@ -99,6 +112,27 @@ public class WebpageServiceImpl implements WebpageService {
         return searchResult;
     }
 
+    @Override
+    public SearchResult embedSearch(String query, Pageable pageable) throws IOException {
+
+        List<Float> embeddingData = embeddingExternalService.getEmbeddingData(query);
+
+
+        SearchResponse<WebpageEntity> response = elasticsearchClient.search(SearchRequest.of(builder -> builder.index(INDEX_NAME)
+                .trackTotalHits(b -> b.enabled(true))
+                .size(pageable.getPageSize())
+                .from((pageable.getPageNumber() - 1) * pageable.getPageSize())
+
+                .knn(knnBuilder -> knnBuilder.queryVector(embeddingData).field("dimensions")
+                        .k(pageable.getPageSize())
+                        .numCandidates((long) Math.pow(pageable.getPageSize(), 2)))
+
+        ), WebpageEntity.class);
+
+
+        return extractSearchFromResponse(response, pageable);
+    }
+
     private Query getTitleSearchQuery(String query) {
 
         return Query.of(b -> b.match(m -> m.field("title")
@@ -148,6 +182,8 @@ public class WebpageServiceImpl implements WebpageService {
 
             WebpageEntity source = hit.source();
             String summary = extractBodySummaryFromHighlight(hit);
+
+            assert source != null;
 
             searchResult.getSearchData().add(
                     SearchResult.SearchData
@@ -343,6 +379,7 @@ public class WebpageServiceImpl implements WebpageService {
                 .id(data.getId())
                 .url(data.getUrl())
                 .body(data.getBody())
+                .dimensions(data.getDimensions())
                 .title(data.getTitle())
                 .iconUrl(data.getIconUrl())
                 .siteName(data.getSiteName())

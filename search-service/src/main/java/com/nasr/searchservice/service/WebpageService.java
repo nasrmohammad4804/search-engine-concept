@@ -13,7 +13,11 @@ public interface WebpageService {
 
     WebpageEntity save(ETLData etlWebpageData);
 
+    Iterable<WebpageEntity> saveAll(List<ETLData> etlWebpageData);
+
     List<String> suggest(String query) throws IOException;
 
     SearchResult search(String query, Pageable pageable) throws IOException;
+
+    SearchResult embedSearch(String query, Pageable pageable) throws IOException;
 }

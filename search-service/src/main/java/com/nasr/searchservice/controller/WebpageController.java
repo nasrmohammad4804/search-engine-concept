@@ -27,6 +27,13 @@ public class WebpageController {
         return ResponseEntity.ok(webpageService.search(query, of(page, size)));
     }
 
+    @GetMapping("/embed-search")
+    public ResponseEntity<?> embedSearch(@RequestParam String query, @RequestParam(defaultValue = "1") int page,
+                                         @RequestParam(defaultValue = "10") int size) throws IOException {
+
+        return ResponseEntity.ok(webpageService.embedSearch(query, of(page, size)));
+    }
+
     @GetMapping("/suggest")
     public ResponseEntity<?> suggest(@RequestParam("query") String query) throws IOException {
         List<String> suggestions = webpageService.suggest(query);
