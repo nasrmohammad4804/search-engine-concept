@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.springframework.data.domain.PageRequest.of;
 
@@ -34,9 +33,4 @@ public class WebpageController {
         return ResponseEntity.ok(webpageService.embedSearch(query, of(page, size)));
     }
 
-    @GetMapping("/suggest")
-    public ResponseEntity<?> suggest(@RequestParam("query") String query) throws IOException {
-        List<String> suggestions = webpageService.suggest(query);
-        return ResponseEntity.ok(suggestions);
-    }
 }
