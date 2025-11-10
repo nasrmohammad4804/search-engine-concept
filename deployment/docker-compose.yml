@@ -140,6 +140,7 @@ services:
       - kafka-broker-2-service
     networks:
       - state-full-network
+      - state-less-network
 
   crawler-subscriber-service:
     build:
