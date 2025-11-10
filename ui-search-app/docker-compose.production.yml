@@ -3,7 +3,7 @@ services:
   ui-search-app:
     build:
       context: .
-      dockerfile: .
+      dockerfile: ./Dockerfile-development
     container_name: ui-search-app-container
     environment:
       - NODE_ENV=production
