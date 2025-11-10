@@ -5,8 +5,8 @@ services:
       context: .
       dockerfile: ./Dockerfile-development
     container_name: ui-search-app-container
-    environment:
-      - NODE_ENV=production
+    env_file:
+    - .env.production
     ports:
       - "80:80"
     networks:
