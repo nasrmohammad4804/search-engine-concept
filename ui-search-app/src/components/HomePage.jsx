@@ -15,7 +15,7 @@ const [suggestions, setSuggestions] = useState([]);
 const navigate = useNavigate();
   const debounceTimeoutRef = React.useRef(null);
   const apiUrl = process.env.REACT_APP_API_URL;
-
+  console.log("apiUrl is ",apiUrl);
   useEffect(() => {
     document.body.style.backgroundColor='#ffffff';
     return () => {   document.body.style.backgroundColor='';}
