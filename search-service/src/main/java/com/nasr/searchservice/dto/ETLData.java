@@ -20,8 +20,6 @@ public class ETLData {
     private String title;
     @JsonProperty(value = "body")
     private String body;
-    @JsonIgnore
-    private List<Float> dimensions = new Vector<>();
     @JsonProperty(value = "url")
     private String url;
     @JsonProperty(value = "siteName")

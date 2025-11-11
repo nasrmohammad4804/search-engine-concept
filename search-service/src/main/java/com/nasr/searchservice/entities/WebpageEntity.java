@@ -42,9 +42,6 @@ public class WebpageEntity {
     @Field(type = FieldType.Text, analyzer = "custom_standard_analyzer")
     private String body;
 
-    @Field(type = FieldType.Dense_Vector,dims =384,similarity ="cosine")
-    private List<Float> dimensions = new Vector<>();
-
     @Field(type = FieldType.Text)
     private String iconUrl;
 
