@@ -8,7 +8,7 @@ services:
       - discovery.type=single-node
       - ELASTIC_PASSWORD=123456
       - xpack.profiling.enabled=false
-      - xpack.apm.enabled=false
+      - xpack.apm_data.enabled=false
       - xpack.ml.enabled=false
       - ES_JAVA_OPTS=-Xms1g -Xmx1g
       - xpack.security.http.ssl.enabled= false
