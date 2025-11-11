@@ -7,7 +7,9 @@ services:
     environment:
       - discovery.type=single-node
       - ELASTIC_PASSWORD=123456
-      - bootstrap.memory_lock=true
+      - xpack.profiling.enabled=false
+      - xpack.apm.enabled=false
+      - xpack.ml.enabled=false
       - ES_JAVA_OPTS=-Xms1g -Xmx1g
       - xpack.security.http.ssl.enabled= false
     ulimits:
