@@ -11,7 +11,7 @@ const SearchPage = () => {
 
   const location = useLocation();
   const query = new URLSearchParams(location.search).get("query");
-  const apiUrl = process.env.REACT_APP_API_URL;
+  const apiUrl = 'http://buffo.ir:8083';
 
 
   const handlePageChange = (page) => {
