@@ -10,7 +10,7 @@ services:
       - xpack.profiling.enabled=false
       - xpack.apm.enabled=false
       - xpack.ml.enabled=false
-      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
       - xpack.security.http.ssl.enabled= false
     ulimits:
       memlock:
