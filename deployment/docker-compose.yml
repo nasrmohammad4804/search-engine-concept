@@ -23,12 +23,6 @@ services:
       - elk_data:/usr/share/elasticsearch/data
     networks:
       - state-full-network
-    deploy:
-    resources:
-      limits:
-        memory: 3g
-      reservations:
-        memory: 2g
 
   zookeeper-service:
     image: confluentinc/cp-zookeeper:7.4.4
