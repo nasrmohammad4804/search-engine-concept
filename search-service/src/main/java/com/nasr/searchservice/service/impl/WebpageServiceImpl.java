@@ -379,7 +379,6 @@ public class WebpageServiceImpl implements WebpageService {
                 .id(data.getId())
                 .url(data.getUrl())
                 .body(data.getBody())
-                .dimensions(data.getDimensions())
                 .title(data.getTitle())
                 .iconUrl(data.getIconUrl())
                 .siteName(data.getSiteName())
