@@ -22,18 +22,6 @@ services:
     networks:
       - state-full-network
 
-  kibana-service:
-    image: docker.elastic.co/kibana/kibana:8.17.0
-    container_name: kibana-service-container
-    ports:
-      - "5601:5601"
-    volumes:
-      - ./kibana-config.yml:/usr/share/kibana/config/kibana.yml
-    depends_on:
-      - elastic-service
-    networks:
-      - state-full-network
-
   zookeeper-service:
     image: confluentinc/cp-zookeeper:7.4.4
     container_name: zookeeper-container
