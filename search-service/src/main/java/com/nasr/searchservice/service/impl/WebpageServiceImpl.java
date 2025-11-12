@@ -139,7 +139,7 @@ public class WebpageServiceImpl implements WebpageService {
                 .query(query)
                 .boost(5F)
                 .operator(And)
-                .fuzziness(String.valueOf(2)
+                .fuzziness(String.valueOf(1)
                 )));
     }
 
@@ -150,12 +150,12 @@ public class WebpageServiceImpl implements WebpageService {
                                                 phraseBuilder.field("body")
                                                         .query(query)
                                                         .slop(5)
-                                                        .boost(2F))
+                                                        .boost(3F))
                                         ),
                                         Query.of(matchQuery -> matchQuery.match(matchBuilder ->
                                                 matchBuilder.field("body")
                                                         .query(query)
-                                                        .fuzziness(String.valueOf(2))
+                                                        .fuzziness(String.valueOf(1))
                                                         .operator(And)
                                                         .boost(1F)
                                         ))
