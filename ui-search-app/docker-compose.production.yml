@@ -6,11 +6,36 @@ services:
       dockerfile: ./Dockerfile-development
     container_name: ui-search-app-container
     env_file:
-    - .env.production
+      - .env.production
+    expose:
+      - "80"
+    networks:
+     - state-less-network
+
+
+  nginx:
+    image: nginx:stable
+    container_name: ngingx_reverse_proxy
+    depends_on:
+      - ui-search-app
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
     networks:
-      - state-less-network
+     - state-less-network
+  
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/www:/var/www/certbot
+      - ./certbot/conf:/etc/letsencrypt
+
+      
 
 networks:
   state-less-network:
