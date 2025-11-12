@@ -35,8 +35,6 @@ services:
       - ./certbot/www:/var/www/certbot
       - ./certbot/conf:/etc/letsencrypt
 
-      
-
 networks:
   state-less-network:
     external: true
