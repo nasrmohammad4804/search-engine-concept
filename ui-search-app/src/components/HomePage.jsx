@@ -1,6 +1,6 @@
 import React from "react";
 import './../styles/homePage.css';
-import  pistonPicture from './../assets/piston-logo.png'
+import  pistonPicture from './../assets/buffo.jpg'
 import { useState ,useEffect} from "react";
 import maginfy from './../assets/magnify.png'
 import {  useNavigate } from "react-router-dom";
@@ -9,12 +9,11 @@ import {  useNavigate } from "react-router-dom";
 
 const HomePage = () => {
 
-
-  const [inputValue, setInputValue] = useState("");
+const [inputValue, setInputValue] = useState("");
 const [suggestions, setSuggestions] = useState([]); 
 const navigate = useNavigate();
   const debounceTimeoutRef = React.useRef(null);
-  const apiUrl = 'http://buffo.ir:8083';
+  const apiUrl = 'https://buffo.ir';
   console.log("apiUrl is ",apiUrl);
   useEffect(() => {
     document.body.style.backgroundColor='#ffffff';
@@ -79,7 +78,7 @@ const navigate = useNavigate();
 
       <main className="main">
         <div className="logo-container">
-          <img className="logo" src={pistonPicture} width='200px' height='200px'  />
+          <img className="logo" src={pistonPicture} width='200px' height='200px'   />
 
         </div>
         <div className="search-bar-container" >
